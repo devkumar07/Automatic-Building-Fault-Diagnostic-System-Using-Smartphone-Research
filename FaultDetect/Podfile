@@ -1,0 +1,23 @@
+# Uncomment the next line to define a global platform for your project
+# platform :ios, '9.0'
+
+target 'FaultDetect' do
+  # Comment the next line if you don't want to use dynamic frameworks
+  use_frameworks!
+
+  # Pods for FaultDetect
+   
+pod 'AWSCore'
+pod 'AWSCognito'
+pod 'AWSS3'
+
+  target 'FaultDetectTests' do
+    inherit! :search_paths
+    # Pods for testing
+  end
+
+  target 'FaultDetectUITests' do
+    # Pods for testing
+  end
+
+end

@@ -1,0 +1,6 @@
+framework module Pods_FaultDetect_FaultDetectUITests {
+  umbrella header "Pods-FaultDetect-FaultDetectUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}
