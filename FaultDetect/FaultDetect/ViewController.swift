@@ -57,7 +57,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
     }
 
     @IBAction func uploadReading(_ sender: Any) {
-        uploadFile(with: "actual_result", type: "csv")
+        uploadFile(with: "sensor_data", type: "csv")
     }
     
     @IBAction func predictButton(_ sender: Any) {

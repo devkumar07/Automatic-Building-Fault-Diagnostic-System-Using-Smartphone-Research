@@ -9,7 +9,8 @@
 /* Begin PBXBuildFile section */
 		5939A86555B7C0CE7A1758E0 /* Pods_FaultDetectTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF54F373CE006CC9E4BD14FE /* Pods_FaultDetectTests.framework */; };
 		7EEED3922FD81FA049C3385D /* Pods_FaultDetect_FaultDetectUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F0EFEAA02ABD628BFD997E9 /* Pods_FaultDetect_FaultDetectUITests.framework */; };
-		EB8058A225520F7100881846 /* actual_result.csv in Resources */ = {isa = PBXBuildFile; fileRef = EB8058A125520F7100881846 /* actual_result.csv */; };
+		EB8BDF8C2557AD500053187C /* sensor_data.csv in Resources */ = {isa = PBXBuildFile; fileRef = EB8BDF8B2557AD500053187C /* sensor_data.csv */; };
+		EB8BDF912557AF150053187C /* test_data.csv in Resources */ = {isa = PBXBuildFile; fileRef = EB8BDF902557AF150053187C /* test_data.csv */; };
 		EB8CEE7F254FB32200C25DB9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB8CEE7E254FB32200C25DB9 /* AppDelegate.swift */; };
 		EB8CEE81254FB32200C25DB9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB8CEE80254FB32200C25DB9 /* SceneDelegate.swift */; };
 		EB8CEE83254FB32200C25DB9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB8CEE82254FB32200C25DB9 /* ViewController.swift */; };
@@ -48,7 +49,8 @@
 		CF54F373CE006CC9E4BD14FE /* Pods_FaultDetectTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FaultDetectTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D86AF3D6DB12184DFE908ED2 /* Pods_FaultDetect.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FaultDetect.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E46E800A526428C10E4FDD18 /* Pods-FaultDetect-FaultDetectUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FaultDetect-FaultDetectUITests.debug.xcconfig"; path = "Target Support Files/Pods-FaultDetect-FaultDetectUITests/Pods-FaultDetect-FaultDetectUITests.debug.xcconfig"; sourceTree = "<group>"; };
-		EB8058A125520F7100881846 /* actual_result.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = actual_result.csv; path = ../../../../actual_result.csv; sourceTree = "<group>"; };
+		EB8BDF8B2557AD500053187C /* sensor_data.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = sensor_data.csv; path = ../../sensor_data.csv; sourceTree = "<group>"; };
+		EB8BDF902557AF150053187C /* test_data.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = test_data.csv; path = ../../test_data.csv; sourceTree = "<group>"; };
 		EB8CEE7B254FB32200C25DB9 /* FaultDetect.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FaultDetect.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB8CEE7E254FB32200C25DB9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EB8CEE80254FB32200C25DB9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -141,7 +143,8 @@
 		EB8CEE7D254FB32200C25DB9 /* FaultDetect */ = {
 			isa = PBXGroup;
 			children = (
-				EB8058A125520F7100881846 /* actual_result.csv */,
+				EB8BDF8B2557AD500053187C /* sensor_data.csv */,
+				EB8BDF902557AF150053187C /* test_data.csv */,
 				EB8CEE7E254FB32200C25DB9 /* AppDelegate.swift */,
 				EB8CEE80254FB32200C25DB9 /* SceneDelegate.swift */,
 				EB8CEE82254FB32200C25DB9 /* ViewController.swift */,
@@ -279,10 +282,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EB8BDF8C2557AD500053187C /* sensor_data.csv in Resources */,
 				EB8CEE8B254FB32200C25DB9 /* LaunchScreen.storyboard in Resources */,
 				EB8CEE88254FB32200C25DB9 /* Assets.xcassets in Resources */,
+				EB8BDF912557AF150053187C /* test_data.csv in Resources */,
 				EB8CEE86254FB32200C25DB9 /* Main.storyboard in Resources */,
-				EB8058A225520F7100881846 /* actual_result.csv in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
