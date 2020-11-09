@@ -10,7 +10,7 @@ app = Flask(__name__)
 @app.route('/predict', methods = ['GET', 'POST'])
 def predict():
    s3 = boto3.client('s3')
-   s3.download_file('faultdetect','test_data.csv', 'sensor_data.csv')
+   s3.download_file('faultdetect','sensor_data.csv', 'sensor_data.csv')
    if request.method == 'POST':
       app_data = request.json
       data = pd.read_csv('sensor_data.csv', parse_dates=['time'], index_col=['time'])

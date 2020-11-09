@@ -11,11 +11,17 @@ import AVFoundation
 import AWSCognito
 import AWSS3
 
+struct Response: Decodable {
+    let error: Int
+    let msg: String
+}
+
 class ViewController: UIViewController, UITextFieldDelegate {
     
     let bucketName = "faultdetect"
-    
     @IBOutlet weak var areaField: UITextField!
+    @IBOutlet weak var resultLabel: UILabel!
+    @IBOutlet weak var successSensorDataUpload: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,6 +56,9 @@ class ViewController: UIViewController, UITextFieldDelegate {
             }
             if task.result != nil{
                 print("Uploaded \(key)")
+                DispatchQueue.main.async {
+                    self.successSensorDataUpload.text = "Sensor data uploaded!"
+                }
             }
             
             return nil
@@ -73,13 +82,17 @@ class ViewController: UIViewController, UITextFieldDelegate {
        let session = URLSession.shared
        session.dataTask(with: request) { (data, response, error) in
            if let response = response {
-               print(response)
+            print(response)
            }
            
            if let data = data {
                do {
                    let json = try JSONSerialization.jsonObject(with: data, options: [])
                    print(json)
+                    let response = try JSONDecoder().decode(Response.self, from: data)
+                    DispatchQueue.main.async {
+                        self.resultLabel.text = response.msg
+                    }
                } catch {
                    print(error)
                }
