@@ -10,11 +10,12 @@ outside_temp = []
 @app.route('/getOutsideTemp', methods = ['GET', 'POST'])
 def getOutsideTemp():
    if request.method == 'POST':
-      app_data = request.post
+      app_data = request.json
       time_steps = app_data['steps']
       outside_temp = apiWeatherCall(time_steps)
+      print(outside_temp)
 
-   return json.dumps({"msg":"SUCCESS!!!"})
+   return json.dumps({"error":200, "msg":"Outside tempreature recorded!"})
 
 @app.route('/predict', methods = ['GET', 'POST'])
 def predict():

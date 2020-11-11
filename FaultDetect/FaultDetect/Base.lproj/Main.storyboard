@@ -27,6 +27,9 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jla-ov-dAy">
                                         <rect key="frame" x="0.0" y="76" width="197" height="30"/>
                                         <state key="normal" title="Record Outside Tempreature"/>
+                                        <connections>
+                                            <action selector="recordTempButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="67Y-Pi-ord"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wT7-5S-qLk">
                                         <rect key="frame" x="0.0" y="148" width="197" height="30"/>

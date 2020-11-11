@@ -27,7 +27,7 @@ def apiWeatherCall(time_steps):
 
     complete_url = base_url + "appid=" + api_key + "&q=" + city_name +"&units=metric" 
     i = 0
-    while True and i < time_steps:
+    while True and i < int(time_steps):
         i = i + 1
         response = requests.get(complete_url) 
         

@@ -103,6 +103,41 @@ class ViewController: UIViewController, UITextFieldDelegate {
        }.resume()
     }
     
+    @IBAction func recordTempButton(_ sender: Any) {
+        areaField.endEditing(true)
+        let parameters = ["steps": timeStepsField.text]
+        guard let url = URL(string: "http://127.0.0.1:5000/getOutsideTemp") else { return }
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        guard let httpBody = try? JSONSerialization.data(withJSONObject: parameters, options: []) else { return }
+        request.httpBody = httpBody
+        DispatchQueue.main.async {
+            self.resultLabel.text = "Recording outside tempreature"
+        }
+        let session = URLSession.shared
+        session.dataTask(with: request) { (data, response, error) in
+            if let response = response {
+             print(response)
+            }
+            
+            if let data = data {
+                do {
+                    let json = try JSONSerialization.jsonObject(with: data, options: [])
+                    print(json)
+                     let response = try JSONDecoder().decode(Response.self, from: data)
+                     DispatchQueue.main.async {
+                        self.resultLabel.text = response.msg
+                     }
+                } catch {
+                    print(error)
+                }
+            }
+            
+        }.resume()
+    }
+    
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         areaField.endEditing(true)
         return true
