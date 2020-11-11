@@ -6,6 +6,15 @@ import pandas as pd
 import boto3
 
 app = Flask(__name__)
+outside_temp = []
+@app.route('/getOutsideTemp', methods = ['GET', 'POST'])
+def getOutsideTemp():
+   if request.method == 'POST':
+      app_data = request.post
+      time_steps = app_data['steps']
+      outside_temp = apiWeatherCall(time_steps)
+
+   return json.dumps({"msg":"SUCCESS!!!"})
 
 @app.route('/predict', methods = ['GET', 'POST'])
 def predict():
