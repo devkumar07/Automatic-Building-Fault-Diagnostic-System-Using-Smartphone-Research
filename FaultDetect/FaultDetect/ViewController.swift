@@ -19,6 +19,7 @@ struct Response: Decodable {
 class ViewController: UIViewController, UITextFieldDelegate {
     
     let bucketName = "faultdetect"
+    @IBOutlet weak var timeStepsField: UITextField!
     @IBOutlet weak var areaField: UITextField!
     @IBOutlet weak var resultLabel: UILabel!
     @IBOutlet weak var successSensorDataUpload: UILabel!
@@ -27,6 +28,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
         
         areaField.delegate = self
+        timeStepsField.delegate = self
         // Do any additional setup after loading the view.
         // Initialize the Amazon Cognito credentials provider
 
