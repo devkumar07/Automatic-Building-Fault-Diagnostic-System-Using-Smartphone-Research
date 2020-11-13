@@ -50,13 +50,18 @@ def apiWeatherCall(time_steps):
         time.sleep(1.0 - ((time.time() - starttime) % 1.0))
     d = {"time":time_vec,'temp':temp}
     df = pd.DataFrame(d)
+    df['time'] = pd.to_datetime(df['time'])
+    df.set_index('time', inplace=True)
     return df
 
-def preprocess_sensor_data(data,area):
+def preprocess_sensor_data(data,area,outside_temp, start_time, stop_time):
     processed = []
     for i in range(0, len(data)):
         processed.append(float(area)*data['Speed'][i])
+    filtered_data = outside_temp.loc[str(start_time):str(stop_time)]
+    filtered_outside_temp = filtered_data['temp']
     data['air_flow'] = processed
+    data['outdoor_temp'] = filtered_outside_temp
     return data
 
 def model(data):
