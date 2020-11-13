@@ -24,6 +24,7 @@ def apiWeatherCall(time_steps):
     city_name = 'San Jose'
 
     temp = []
+    time_vec = []
 
     complete_url = base_url + "appid=" + api_key + "&q=" + city_name +"&units=metric" 
     i = 0
@@ -38,15 +39,18 @@ def apiWeatherCall(time_steps):
             y = x["main"] 
 
             current_temperature = y["temp"] 
-
+            now = datetime.now()
+            dt_string = now.strftime("%m/%d/%Y %H:%M:%S")
+            time_vec.append(dt_string)
             temp.append(str(current_temperature))
-
             print('temp:',str(current_temperature))
         
         else: 
             print(" City Not Found ") 
-        time.sleep(10.0 - ((time.time() - starttime) % 10.0))
-    return temp
+        time.sleep(1.0 - ((time.time() - starttime) % 1.0))
+    d = {"time":time_vec,'temp':temp}
+    df = pd.DataFrame(d)
+    return df
 
 def preprocess_sensor_data(data,area):
     processed = []

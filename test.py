@@ -1,7 +1,7 @@
 import requests, json
 import time
 from datetime import datetime
-
+import pandas as pd
 # datetime object containing current date and time
 now = datetime.now()
 starttime = time.time()
@@ -41,7 +41,7 @@ while True and i < 5:
         print("now =", now)
 
         # dd/mm/YY H:M:S
-        dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
+        dt_string = now.strftime("%m/%d/%Y %H:%M:%S")
         print("date and time =", dt_string)	
         # store the value corresponding 
         # to the "temp" key of y 
