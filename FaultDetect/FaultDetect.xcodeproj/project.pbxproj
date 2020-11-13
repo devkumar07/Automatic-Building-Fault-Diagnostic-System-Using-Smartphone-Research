@@ -9,8 +9,6 @@
 /* Begin PBXBuildFile section */
 		5939A86555B7C0CE7A1758E0 /* Pods_FaultDetectTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF54F373CE006CC9E4BD14FE /* Pods_FaultDetectTests.framework */; };
 		7EEED3922FD81FA049C3385D /* Pods_FaultDetect_FaultDetectUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F0EFEAA02ABD628BFD997E9 /* Pods_FaultDetect_FaultDetectUITests.framework */; };
-		EB5463DE255A015000F48824 /* sensor_data.csv in Resources */ = {isa = PBXBuildFile; fileRef = EB5463DD255A015000F48824 /* sensor_data.csv */; };
-		EB8BDF912557AF150053187C /* test_data.csv in Resources */ = {isa = PBXBuildFile; fileRef = EB8BDF902557AF150053187C /* test_data.csv */; };
 		EB8CEE7F254FB32200C25DB9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB8CEE7E254FB32200C25DB9 /* AppDelegate.swift */; };
 		EB8CEE81254FB32200C25DB9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB8CEE80254FB32200C25DB9 /* SceneDelegate.swift */; };
 		EB8CEE83254FB32200C25DB9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB8CEE82254FB32200C25DB9 /* ViewController.swift */; };
@@ -19,6 +17,7 @@
 		EB8CEE8B254FB32200C25DB9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EB8CEE89254FB32200C25DB9 /* LaunchScreen.storyboard */; };
 		EB8CEE96254FB32300C25DB9 /* FaultDetectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB8CEE95254FB32300C25DB9 /* FaultDetectTests.swift */; };
 		EB8CEEA1254FB32300C25DB9 /* FaultDetectUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB8CEEA0254FB32300C25DB9 /* FaultDetectUITests.swift */; };
+		EBA1AC8B255E5868008ABFCB /* raw_data.csv in Resources */ = {isa = PBXBuildFile; fileRef = EBA1AC8A255E5868008ABFCB /* raw_data.csv */; };
 		F74650488D9B57D8DA716FC9 /* Pods_FaultDetect.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D86AF3D6DB12184DFE908ED2 /* Pods_FaultDetect.framework */; };
 /* End PBXBuildFile section */
 
@@ -49,8 +48,6 @@
 		CF54F373CE006CC9E4BD14FE /* Pods_FaultDetectTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FaultDetectTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D86AF3D6DB12184DFE908ED2 /* Pods_FaultDetect.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FaultDetect.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E46E800A526428C10E4FDD18 /* Pods-FaultDetect-FaultDetectUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FaultDetect-FaultDetectUITests.debug.xcconfig"; path = "Target Support Files/Pods-FaultDetect-FaultDetectUITests/Pods-FaultDetect-FaultDetectUITests.debug.xcconfig"; sourceTree = "<group>"; };
-		EB5463DD255A015000F48824 /* sensor_data.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = sensor_data.csv; path = ../../../../Desktop/OneDrive/EECS262Research/sensor_data.csv; sourceTree = "<group>"; };
-		EB8BDF902557AF150053187C /* test_data.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = test_data.csv; path = ../../test_data.csv; sourceTree = "<group>"; };
 		EB8CEE7B254FB32200C25DB9 /* FaultDetect.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FaultDetect.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB8CEE7E254FB32200C25DB9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EB8CEE80254FB32200C25DB9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -65,6 +62,7 @@
 		EB8CEE9C254FB32300C25DB9 /* FaultDetectUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FaultDetectUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB8CEEA0254FB32300C25DB9 /* FaultDetectUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaultDetectUITests.swift; sourceTree = "<group>"; };
 		EB8CEEA2254FB32300C25DB9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EBA1AC8A255E5868008ABFCB /* raw_data.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = raw_data.csv; path = ../../raw_data.csv; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -143,8 +141,7 @@
 		EB8CEE7D254FB32200C25DB9 /* FaultDetect */ = {
 			isa = PBXGroup;
 			children = (
-				EB8BDF902557AF150053187C /* test_data.csv */,
-				EB5463DD255A015000F48824 /* sensor_data.csv */,
+				EBA1AC8A255E5868008ABFCB /* raw_data.csv */,
 				EB8CEE7E254FB32200C25DB9 /* AppDelegate.swift */,
 				EB8CEE80254FB32200C25DB9 /* SceneDelegate.swift */,
 				EB8CEE82254FB32200C25DB9 /* ViewController.swift */,
@@ -283,9 +280,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				EB8CEE8B254FB32200C25DB9 /* LaunchScreen.storyboard in Resources */,
+				EBA1AC8B255E5868008ABFCB /* raw_data.csv in Resources */,
 				EB8CEE88254FB32200C25DB9 /* Assets.xcassets in Resources */,
-				EB8BDF912557AF150053187C /* test_data.csv in Resources */,
-				EB5463DE255A015000F48824 /* sensor_data.csv in Resources */,
 				EB8CEE86254FB32200C25DB9 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

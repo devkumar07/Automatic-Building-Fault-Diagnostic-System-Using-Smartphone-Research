@@ -20,9 +20,9 @@ def getOutsideTemp():
 @app.route('/predict', methods = ['GET', 'POST'])
 def predict():
    s3 = boto3.client('s3')
-   s3.download_file('faultdetect','sensor_data.csv', 'sensor_data.csv')
    if request.method == 'POST':
       app_data = request.json
+      s3.download_file('faultdetect',app_data['file_name']+'.csv', 'sensor_data.csv')
       data = pd.read_csv('sensor_data.csv', parse_dates=['time'], index_col=['time'])
       data = preprocess_sensor_data(data, app_data['area'])
       error_rate = model(data)

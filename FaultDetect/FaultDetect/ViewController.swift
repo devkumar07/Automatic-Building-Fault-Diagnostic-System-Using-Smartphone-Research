@@ -21,6 +21,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
     let bucketName = "faultdetect"
     @IBOutlet weak var timeStepsField: UITextField!
     @IBOutlet weak var areaField: UITextField!
+    @IBOutlet weak var filenameField: UITextField!
     @IBOutlet weak var resultLabel: UILabel!
     @IBOutlet weak var successSensorDataUpload: UILabel!
     
@@ -59,7 +60,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
             if task.result != nil{
                 print("Uploaded \(key)")
                 DispatchQueue.main.async {
-                    self.successSensorDataUpload.text = "Sensor data uploaded!"
+                    self.resultLabel.text = "Sensor data uploaded!"
                 }
             }
             
@@ -68,12 +69,12 @@ class ViewController: UIViewController, UITextFieldDelegate {
     }
 
     @IBAction func uploadReading(_ sender: Any) {
-        uploadFile(with: "sensor_data", type: "csv")
+        uploadFile(with: (filenameField.text)!, type: "csv")
     }
     
     @IBAction func predictButton(_ sender: Any) {
        areaField.endEditing(true)
-       let parameters = ["area": areaField.text]
+       let parameters = ["area": areaField.text,"file_name": filenameField.text]
        guard let url = URL(string: "http://127.0.0.1:5000/predict") else { return }
        var request = URLRequest(url: url)
        request.httpMethod = "POST"
@@ -140,6 +141,8 @@ class ViewController: UIViewController, UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         areaField.endEditing(true)
+        filenameField.endEditing(true)
+        timeStepsField.endEditing(true)
         return true
     }
     

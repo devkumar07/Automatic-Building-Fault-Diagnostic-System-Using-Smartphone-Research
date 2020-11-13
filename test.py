@@ -1,6 +1,9 @@
 import requests, json
 import time
+from datetime import datetime
 
+# datetime object containing current date and time
+now = datetime.now()
 starttime = time.time()
 api_key = "ae13574a1f19a995ed53b8d8dd950cf3"
   
@@ -34,7 +37,12 @@ while True and i < 5:
         # store the value of "main" 
         # key in variable y 
         y = x["main"] 
-    
+        print(x)
+        print("now =", now)
+
+        # dd/mm/YY H:M:S
+        dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
+        print("date and time =", dt_string)	
         # store the value corresponding 
         # to the "temp" key of y 
         current_temperature = y["temp"] 
