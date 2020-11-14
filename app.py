@@ -22,23 +22,31 @@ def predict():
    if request.method == 'POST':
       app_data = request.json
       s3.download_file('faultdetect',app_data['file_name']+'.csv', 'sensor_data.csv')
-      #data = pd.read_csv('sensor_data.csv', parse_dates=['time'], index_col=['time'])
-      data = pd.read_csv('sensor_data.csv')
-      data['time'] = pd.to_datetime(data['time'])
-      start_time = data['time'][0]
-      end_time = data['time'][len(data['time'])-1]
-      data.set_index('time', inplace=True)
+      data = pd.read_csv('sensor_data.csv', parse_dates=['time'], index_col=['time'])
+      zone_data = pd.read_csv('zone_temp.csv')
+
+      zone_data['time'] = pd.to_datetime(zone_data['time'])
+      start_time = zone_data['time'][0]
+      end_time = zone_data['time'][len(zone_data['time'])-1]
+
       print(data)
-      print(start_time)
-      print(str(end_time))
+      print(zone_data)
       print(outside_temp)
+      print(start_time)
+      data = data.loc[str(start_time):str(end_time)]
+      data = data.asfreq(freq='60S')
+      zone_data.set_index('time', inplace=True)
+
+      data['zone_temp'] = zone_data.loc[str(start_time):str(end_time)]['temp']
+      data['outdoor_temp'] = outside_temp.loc[str(start_time):str(end_time)]['temp']
+      print(data)
       data = preprocess_sensor_data(data, app_data['area'], outside_temp,start_time,end_time)
       error_rate = model(data)
       print(error_rate)
       if error_rate > 2.0:
-         return json.dumps({"error":error_rate, "msg":"Insufficient data"})
+         return json.dumps({"error": 200, "msg":"Insufficient data"})
       else:
-         return json.dumps({"error":error_rate, "msg":"Sufficient data"})
+         return json.dumps({"error": 200, "msg":"Sufficient data"})
    return json.dumps({"REQUEST ERROR":"COULD NOT RECIEVE POST REQUEST"})
 if __name__ == '__main__':
     app.run()

@@ -43,6 +43,7 @@ def apiWeatherCall(time_steps):
             dt_string = now.strftime("%m/%d/%Y %H:%M:%S")
             time_vec.append(dt_string)
             temp.append(str(current_temperature))
+            print('time:',str(dt_string))
             print('temp:',str(current_temperature))
         
         else: 
@@ -52,6 +53,7 @@ def apiWeatherCall(time_steps):
     df = pd.DataFrame(d)
     df['time'] = pd.to_datetime(df['time'])
     df.set_index('time', inplace=True)
+    df.to_csv ('export_temp.csv', index = True, header=True) 
     return df
 
 def preprocess_sensor_data(data,area,outside_temp, start_time, stop_time):
