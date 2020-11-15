@@ -24,6 +24,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var filenameField: UITextField!
     @IBOutlet weak var resultLabel: UILabel!
     @IBOutlet weak var successSensorDataUpload: UILabel!
+    @IBOutlet weak var zoneTempField: UITextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -70,6 +71,9 @@ class ViewController: UIViewController, UITextFieldDelegate {
 
     @IBAction func uploadReading(_ sender: Any) {
         uploadFile(with: (filenameField.text)!, type: "csv")
+    }
+    @IBAction func uploadZoneTemp(_ sender: Any) {
+        uploadFile(with: (zoneTempField.text)!, type: "csv")
     }
     
     @IBAction func predictButton(_ sender: Any) {
