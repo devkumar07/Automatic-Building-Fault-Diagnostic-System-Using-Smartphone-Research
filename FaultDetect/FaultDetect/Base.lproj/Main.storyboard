@@ -17,77 +17,58 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="39" translatesAutoresizingMaskIntoConstraints="NO" id="hTV-Sj-gpR">
-                                <rect key="frame" x="10" y="246" width="394" height="404"/>
+                                <rect key="frame" x="-13.5" y="277.5" width="441" height="341"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="OaU-jW-aQ4">
-                                        <rect key="frame" x="0.0" y="0.0" width="394" height="28"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="441" height="34"/>
                                         <subviews>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Number of timesteps" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cSS-Kr-KZ5">
-                                                <rect key="frame" x="0.0" y="0.0" width="214.5" height="28"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="265" height="34"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits"/>
                                             </textField>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jla-ov-dAy">
-                                                <rect key="frame" x="214.5" y="0.0" width="179.5" height="28"/>
+                                                <rect key="frame" x="265" y="0.0" width="176" height="34"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                                <state key="normal" title="Request outside temp."/>
+                                                <state key="normal" title="Get outside temp."/>
                                                 <connections>
                                                     <action selector="recordTempButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="67Y-Pi-ord"/>
                                                 </connections>
                                             </button>
                                         </subviews>
                                     </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="EHu-V1-cxF">
-                                        <rect key="frame" x="0.0" y="67" width="394" height="33"/>
-                                        <subviews>
-                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Zone temp. file name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4Lk-XV-5xD">
-                                                <rect key="frame" x="0.0" y="0.0" width="232" height="33"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits"/>
-                                            </textField>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VZG-pV-23j">
-                                                <rect key="frame" x="232" y="0.0" width="162" height="33"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                                <state key="normal" title="Upload zone temp."/>
-                                                <connections>
-                                                    <action selector="recordTempButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="PkW-NH-sMl"/>
-                                                    <action selector="uploadZoneTemp:" destination="BYZ-38-t0r" eventType="touchUpInside" id="7mW-yF-IaE"/>
-                                                </connections>
-                                            </button>
-                                        </subviews>
-                                    </stackView>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Sensor data filename" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Pg1-08-FA4">
-                                        <rect key="frame" x="0.0" y="139" width="394" height="34"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                    </textField>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="1qw-mt-11p">
-                                        <rect key="frame" x="0.0" y="212" width="394" height="34"/>
+                                        <rect key="frame" x="0.0" y="73" width="441" height="34"/>
                                         <subviews>
-                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Area of duct in sq.ft" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hzz-dV-8oU">
-                                                <rect key="frame" x="0.0" y="0.0" width="221.5" height="34"/>
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Sensor data filename" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Pg1-08-FA4">
+                                                <rect key="frame" x="0.0" y="0.0" width="303" height="34"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits"/>
                                             </textField>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wT7-5S-qLk">
-                                                <rect key="frame" x="221.5" y="0.0" width="172.5" height="34"/>
+                                                <rect key="frame" x="303" y="0.0" width="138" height="34"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                                <state key="normal" title="Upload Sensor Data"/>
+                                                <state key="normal" title="Upload Data"/>
                                                 <connections>
                                                     <action selector="uploadReading:" destination="BYZ-38-t0r" eventType="touchUpInside" id="5aM-FF-wHT"/>
                                                 </connections>
                                             </button>
                                         </subviews>
                                     </stackView>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GVT-Dy-0Lw">
-                                        <rect key="frame" x="0.0" y="285" width="394" height="30"/>
+                                    <textField opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Area of duct in sq.ft" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hzz-dV-8oU">
+                                        <rect key="frame" x="0.0" y="146" width="441" height="37"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GVT-Dy-0Lw">
+                                        <rect key="frame" x="0.0" y="222" width="441" height="30"/>
                                         <state key="normal" title="Predict"/>
                                         <connections>
                                             <action selector="predictButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="8hm-Q6-rWG"/>
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UOd-xr-nxD">
-                                        <rect key="frame" x="0.0" y="354" width="394" height="50"/>
+                                        <rect key="frame" x="0.0" y="291" width="441" height="50"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -95,7 +76,7 @@
                                 </subviews>
                             </stackView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="FaultDetect" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kUr-3F-pxb">
-                                <rect key="frame" x="140" y="173" width="135" height="0.0"/>
+                                <rect key="frame" x="140" y="173" width="135" height="31.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="26"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -117,7 +98,6 @@
                         <outlet property="filenameField" destination="Pg1-08-FA4" id="79t-Yg-cU6"/>
                         <outlet property="resultLabel" destination="UOd-xr-nxD" id="0mI-Bl-pvH"/>
                         <outlet property="timeStepsField" destination="cSS-Kr-KZ5" id="fu3-vO-FW9"/>
-                        <outlet property="zoneTempField" destination="4Lk-XV-5xD" id="s2I-m6-BSC"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

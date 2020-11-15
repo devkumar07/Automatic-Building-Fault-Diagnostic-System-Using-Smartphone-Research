@@ -10,13 +10,14 @@ import AVKit
 import AVFoundation
 import AWSCognito
 import AWSS3
+import MobileCoreServices
 
 struct Response: Decodable {
     let error: Int
     let msg: String
 }
 
-class ViewController: UIViewController, UITextFieldDelegate {
+class ViewController: UIViewController, UITextFieldDelegate{
     
     let bucketName = "faultdetect"
     @IBOutlet weak var timeStepsField: UITextField!
@@ -24,13 +25,13 @@ class ViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var filenameField: UITextField!
     @IBOutlet weak var resultLabel: UILabel!
     @IBOutlet weak var successSensorDataUpload: UILabel!
-    @IBOutlet weak var zoneTempField: UITextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         areaField.delegate = self
         timeStepsField.delegate = self
+        filenameField.delegate = self
         // Do any additional setup after loading the view.
         // Initialize the Amazon Cognito credentials provider
 
@@ -42,14 +43,14 @@ class ViewController: UIViewController, UITextFieldDelegate {
         AWSServiceManager.default().defaultServiceConfiguration = configuration
     }
     
-    func uploadFile(with resource: String, type: String){
-        let key = "\(resource).\(type)"
-        let localFilePath = Bundle.main.path(forResource: resource, ofType: type)!
-        let localFileUrl = URL(fileURLWithPath: localFilePath)
+    func uploadFile(with resource: URL, name:String){
+        //let key = resource//"\(resource).\(type)"
+        //let localFilePath = Bundle.main.path(forResource: resource, ofType: kUTTypeCommaSeparatedText as String)!
+        let localFileUrl = resource//URL(fileURLWithPath: localFilePath)
         
         let request = AWSS3TransferManagerUploadRequest()!
         request.bucket = bucketName
-        request.key = key
+        request.key = name
         request.body = localFileUrl
         request.acl = .publicReadWrite
         
@@ -59,7 +60,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
                 print(error)
             }
             if task.result != nil{
-                print("Uploaded \(key)")
+                print("Uploaded ")
                 DispatchQueue.main.async {
                     self.resultLabel.text = "Sensor data uploaded!"
                 }
@@ -70,10 +71,11 @@ class ViewController: UIViewController, UITextFieldDelegate {
     }
 
     @IBAction func uploadReading(_ sender: Any) {
-        uploadFile(with: (filenameField.text)!, type: "csv")
-    }
-    @IBAction func uploadZoneTemp(_ sender: Any) {
-        uploadFile(with: (zoneTempField.text)!, type: "csv")
+        let documentPicker = UIDocumentPickerViewController(documentTypes: [kUTTypeCommaSeparatedText as String], in: .import)
+                documentPicker.delegate = self
+                documentPicker.allowsMultipleSelection = false
+                present(documentPicker, animated: true, completion: nil)
+       // uploadFile(with: (filenameField.text)!, type: "csv")
     }
     
     @IBAction func predictButton(_ sender: Any) {
@@ -149,6 +151,27 @@ class ViewController: UIViewController, UITextFieldDelegate {
         timeStepsField.endEditing(true)
         return true
     }
+}
+extension ViewController: UIDocumentPickerDelegate {
     
+    func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
+        
+        guard let selectedFileURL = urls.first else {
+            return
+        }
+        
+        let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        let sandboxFileURL = dir.appendingPathComponent(selectedFileURL.lastPathComponent)
+        
+        
+        do {
+            try uploadFile(with: selectedFileURL, name: filenameField.text!)
+            
+            print("Copied file!")
+        }
+        catch {
+            print("Error: \(error)")
+        }
+    }
 }
 

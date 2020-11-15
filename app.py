@@ -22,7 +22,8 @@ def predict():
    if request.method == 'POST':
       app_data = request.json
       #Download file from AWS S3
-      s3.download_file('faultdetect',app_data['file_name']+'.csv', 'sensor_data.csv')
+      s3.download_file('faultdetect','test_data.csv', 'sensor_data.csv')
+      s3.download_file('faultdetect','zone_temp.csv', 'zone_temp.csv')
 
       #Loading data fro Testo sensor and Goove sensor
       data = pd.read_csv('sensor_data.csv', parse_dates=['time'], index_col=['time'])
@@ -54,7 +55,6 @@ def predict():
       
       #Calling ML model
       error_rate = model(data)
-      print(error_rate)
       if error_rate > 2.0:
          return json.dumps({"error": 200, "msg":"Insufficient data"})
       else:
