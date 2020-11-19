@@ -25,8 +25,9 @@ def predict():
       s3.download_file('faultdetect','test_data.csv', 'sensor_data.csv')
       s3.download_file('faultdetect','zone_temp.csv', 'zone_temp.csv')
 
-      #Loading data fro Testo sensor and Goove sensor
+      #Loading data from Testo sensor and Goove sensor
       data = pd.read_csv('sensor_data.csv', parse_dates=['time'], index_col=['time'])
+      data1 = pd.read_csv('data/result.csv', parse_dates=['time'], index_col=['time'])
       zone_data = pd.read_csv('zone_temp.csv')
 
       #Fetching start and stop times
@@ -40,26 +41,38 @@ def predict():
       print(outside_temp)
       print(start_time)
       """
+
+      print(start_time)
+      print('-----------')
+      print(outside_temp)
       #Filtering data and converting it into 1 min interval
       data = data.loc[str(start_time):str(end_time)]
-      data = data.asfreq(freq='60S')
+      data1 = data1.loc['2017-11-14 15:20:00':'2017-11-14 16:20:00']
+      data = data.asfreq(freq='300S')
       zone_data.set_index('time', inplace=True)
+      zone_data = zone_data.asfreq(freq='300S')
+      filtered_outside_temp = outside_temp.loc[str(start_time):str(end_time)]
+      filtered_outside_temp = filtered_outside_temp.asfreq(freq='300S')
 
-      #Loading zonet temperature and outdoor temperature to main dataframe
+
+      #Loading zone temperature and outdoor temperature to main dataframe
       data['zone_temp'] = zone_data.loc[str(start_time):str(end_time)]['temp']
       data['outdoor_temp'] = outside_temp.loc[str(start_time):str(end_time)]['temp']
 
       #Preprocessing data to get air_flow
       data = preprocess_sensor_data(data, app_data['area'], outside_temp,start_time,end_time)
       print(data)
+      print(data1)
       
       #Calling ML model
-      error_rate = model(data)
-      if error_rate > 2.0:
+      error_rate, vec1 = model(data)
+      error_rate1, vec2 = model(data1)
+      score = compute_jensen_shannon_divergence(vec1, vec2)
+      if error_rate > 2.0 or error_rate1 > 2.0:
          return json.dumps({"error": 200, "msg":"Insufficient data"})
       else:
-         return json.dumps({"error": 200, "msg":"Sufficient data"})
-   return json.dumps({"REQUEST ERROR":"COULD NOT RECIEVE POST REQUEST"})
+         return json.dumps({"error": 200, "msg": 'Divergence: '+str(score)})
+   return json.dumps({"error":"COULD NOT RECIEVE POST REQUEST"})
 if __name__ == '__main__':
     app.run()
     

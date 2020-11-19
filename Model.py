@@ -13,6 +13,8 @@ import boto3
 from sklearn.model_selection import train_test_split
 import time
 import requests, json
+from sklearn import preprocessing
+from scipy.spatial import distance
 
 def apiWeatherCall(time_steps):
     i = 0
@@ -89,6 +91,18 @@ def model(data):
     print(rmse)
     print('y_test: ',y_test.zone_temp.values)
     print('y_pred: ',y_pred)
-    return rmse
+    return rmse, y_pred
+
+def compute_jensen_shannon_divergence(vec1, vec2):
+
+    p = np.histogram(vec1)[0] / len(vec1)    
+    q = np.histogram(vec2)[0] / len(vec2)
+    print(p)
+    print(q)
+    score = distance.jensenshannon(p, q) ** 2
+    return score
+
+
+
 
 
