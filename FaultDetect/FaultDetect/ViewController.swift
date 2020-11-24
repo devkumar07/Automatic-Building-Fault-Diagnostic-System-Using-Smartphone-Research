@@ -21,6 +21,7 @@ class ViewController: UIViewController, UITextFieldDelegate{
     
     let bucketName = "faultdetect"
     @IBOutlet weak var timeStepsField: UITextField!
+    @IBOutlet weak var timeStepsFieldSeconds: UITextField!
     @IBOutlet weak var areaField: UITextField!
     @IBOutlet weak var filenameField: UITextField!
     @IBOutlet weak var resultLabel: UILabel!
@@ -31,6 +32,7 @@ class ViewController: UIViewController, UITextFieldDelegate{
         
         areaField.delegate = self
         timeStepsField.delegate = self
+        timeStepsFieldSeconds.delegate = self
         filenameField.delegate = self
         // Do any additional setup after loading the view.
         // Initialize the Amazon Cognito credentials provider
@@ -112,7 +114,10 @@ class ViewController: UIViewController, UITextFieldDelegate{
     
     @IBAction func recordTempButton(_ sender: Any) {
         areaField.endEditing(true)
-        let parameters = ["steps": timeStepsField.text]
+        let textfieldInt: Int? = Int(timeStepsField.text!)
+        let textfield2Int: Int? = Int(timeStepsFieldSeconds.text!)
+        let time = textfieldInt!*3600 + textfield2Int!*60
+        let parameters = ["steps": String(time)]
         guard let url = URL(string: "http://127.0.0.1:5000/getOutsideTemp") else { return }
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
@@ -149,6 +154,7 @@ class ViewController: UIViewController, UITextFieldDelegate{
         areaField.endEditing(true)
         filenameField.endEditing(true)
         timeStepsField.endEditing(true)
+        timeStepsFieldSeconds.endEditing(true)
         return true
     }
 }

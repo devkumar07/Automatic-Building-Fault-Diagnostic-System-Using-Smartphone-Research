@@ -12,6 +12,7 @@ def getOutsideTemp():
    if request.method == 'POST':
       app_data = request.json
       time_steps = app_data['steps']
+      print(time_steps)
       global outside_temp
       outside_temp = apiWeatherCall(time_steps)
    return json.dumps({"error":200, "msg":"Outside tempreature recorded!"})

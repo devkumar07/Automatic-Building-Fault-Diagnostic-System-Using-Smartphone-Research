@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <device id="retina6_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -16,20 +16,28 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background" translatesAutoresizingMaskIntoConstraints="NO" id="7Ji-Nr-4xe">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                            </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="39" translatesAutoresizingMaskIntoConstraints="NO" id="hTV-Sj-gpR">
-                                <rect key="frame" x="-13.5" y="277.5" width="441" height="341"/>
+                                <rect key="frame" x="-39" y="276" width="492" height="344"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="OaU-jW-aQ4">
-                                        <rect key="frame" x="0.0" y="0.0" width="441" height="34"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="OaU-jW-aQ4">
+                                        <rect key="frame" x="0.0" y="0.0" width="492" height="34"/>
                                         <subviews>
-                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Number of timesteps" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cSS-Kr-KZ5">
-                                                <rect key="frame" x="0.0" y="0.0" width="265" height="34"/>
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Hr" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="OJV-ez-Ab7">
+                                                <rect key="frame" x="0.0" y="0.0" width="43.666666666666664" height="34"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits"/>
+                                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                            </textField>
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Mins" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sgW-64-8lU">
+                                                <rect key="frame" x="177" y="0.0" width="58.666666666666657" height="34"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                             </textField>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jla-ov-dAy">
-                                                <rect key="frame" x="265" y="0.0" width="176" height="34"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                <rect key="frame" x="369" y="0.0" width="123" height="34"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                 <state key="normal" title="Get outside temp."/>
                                                 <connections>
                                                     <action selector="recordTempButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="67Y-Pi-ord"/>
@@ -37,18 +45,20 @@
                                             </button>
                                         </subviews>
                                     </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="1qw-mt-11p">
-                                        <rect key="frame" x="0.0" y="73" width="441" height="34"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="1qw-mt-11p">
+                                        <rect key="frame" x="0.0" y="73" width="492" height="34"/>
                                         <subviews>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Sensor data filename" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Pg1-08-FA4">
-                                                <rect key="frame" x="0.0" y="0.0" width="303" height="34"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="246" height="34"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits"/>
                                             </textField>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wT7-5S-qLk">
-                                                <rect key="frame" x="303" y="0.0" width="138" height="34"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                                <state key="normal" title="Upload Data"/>
+                                                <rect key="frame" x="246" y="0.0" width="246" height="34"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                <state key="normal" title="Upload Data">
+                                                    <color key="titleShadowColor" systemColor="labelColor"/>
+                                                </state>
                                                 <connections>
                                                     <action selector="uploadReading:" destination="BYZ-38-t0r" eventType="touchUpInside" id="5aM-FF-wHT"/>
                                                 </connections>
@@ -56,19 +66,20 @@
                                         </subviews>
                                     </stackView>
                                     <textField opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Area of duct in sq.ft" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hzz-dV-8oU">
-                                        <rect key="frame" x="0.0" y="146" width="441" height="37"/>
+                                        <rect key="frame" x="0.0" y="146" width="492" height="34"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GVT-Dy-0Lw">
-                                        <rect key="frame" x="0.0" y="222" width="441" height="30"/>
+                                        <rect key="frame" x="0.0" y="219" width="492" height="36"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                         <state key="normal" title="Predict"/>
                                         <connections>
                                             <action selector="predictButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="8hm-Q6-rWG"/>
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UOd-xr-nxD">
-                                        <rect key="frame" x="0.0" y="291" width="441" height="50"/>
+                                        <rect key="frame" x="0.0" y="294" width="492" height="50"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -76,7 +87,7 @@
                                 </subviews>
                             </stackView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="FaultDetect" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kUr-3F-pxb">
-                                <rect key="frame" x="140" y="173" width="135" height="31.5"/>
+                                <rect key="frame" x="140" y="173" width="135" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="26"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -85,10 +96,14 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="7Ji-Nr-4xe" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="1Co-lg-DWn"/>
+                            <constraint firstAttribute="bottom" secondItem="7Ji-Nr-4xe" secondAttribute="bottom" id="2WR-kb-BEo"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="kUr-3F-pxb" secondAttribute="trailing" constant="139" id="4F1-s2-H6Y"/>
                             <constraint firstItem="hTV-Sj-gpR" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="4eJ-8F-NTA"/>
+                            <constraint firstItem="7Ji-Nr-4xe" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="4g8-gc-Ug0"/>
                             <constraint firstItem="hTV-Sj-gpR" firstAttribute="top" secondItem="kUr-3F-pxb" secondAttribute="bottom" constant="73" id="529-LH-v5W"/>
                             <constraint firstItem="kUr-3F-pxb" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="129" id="Sfv-3G-1ZF"/>
+                            <constraint firstItem="7Ji-Nr-4xe" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="TQT-80-MAP"/>
                             <constraint firstItem="hTV-Sj-gpR" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="fsX-FO-v1F"/>
                             <constraint firstItem="kUr-3F-pxb" firstAttribute="leading" relation="lessThanOrEqual" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="140" id="oOX-6L-gnZ"/>
                         </constraints>
@@ -97,7 +112,8 @@
                         <outlet property="areaField" destination="hzz-dV-8oU" id="plp-4n-mYt"/>
                         <outlet property="filenameField" destination="Pg1-08-FA4" id="79t-Yg-cU6"/>
                         <outlet property="resultLabel" destination="UOd-xr-nxD" id="0mI-Bl-pvH"/>
-                        <outlet property="timeStepsField" destination="cSS-Kr-KZ5" id="fu3-vO-FW9"/>
+                        <outlet property="timeStepsField" destination="OJV-ez-Ab7" id="bAp-gp-TIH"/>
+                        <outlet property="timeStepsFieldSeconds" destination="sgW-64-8lU" id="0Fh-D5-Qn3"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -106,6 +122,10 @@
         </scene>
     </scenes>
     <resources>
+        <image name="background" width="2741" height="3657"/>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
