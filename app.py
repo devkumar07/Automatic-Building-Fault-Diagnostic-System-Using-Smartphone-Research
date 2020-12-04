@@ -62,17 +62,20 @@ def predict():
 
       #Preprocessing data to get air_flow
       data = preprocess_sensor_data(data, app_data['area'], outside_temp,start_time,end_time)
-      print(data)
-      print(data1)
       
       #Calling ML model
       error_rate, vec1 = model(data)
       error_rate1, vec2 = model(data1)
       score = compute_jensen_shannon_divergence(vec1, vec2)
+      print(score)
       if error_rate > 2.0 or error_rate1 > 2.0:
          return json.dumps({"error": 200, "msg":"Insufficient data"})
       else:
-         return json.dumps({"error": 200, "msg": 'Divergence: '+str(score)})
+         if score < 0.50:
+            return json.dumps({"error": 200, "msg": 'Main sensor calibrated'})
+         else:
+            return json.dumps({"error": 200, "msg": 'Main sensor uncalibrated'})
+         #return json.dumps({"error": 200, "msg": 'Divergence: '+str(score)})
    return json.dumps({"error":"COULD NOT RECIEVE POST REQUEST"})
 if __name__ == '__main__':
     app.run()

@@ -56,7 +56,7 @@ def apiWeatherCall(time_steps):
     df['time'] = pd.to_datetime(df['time'])
     df.set_index('time', inplace=True)
     df.to_csv ('export_temp.csv', index = True, header=True) 
-    return pd.read_csv('export_temp_final.csv', parse_dates=['time'], index_col=['time'])
+    return pd.read_csv('data/export_temp_final.csv', parse_dates=['time'], index_col=['time'])
 
 def preprocess_sensor_data(data,area,outside_temp, start_time, stop_time):
     processed = []
@@ -69,19 +69,10 @@ def preprocess_sensor_data(data,area,outside_temp, start_time, stop_time):
     return data
 
 def model(data):
-    
-    #data = pd.read_csv('result.csv', parse_dates=['time'], index_col=['time'])
-    #data = pd.read_csv(file_name, parse_dates=['time'], index_col=['time'])
-    
-    #train_data = data.loc[start_time_train : stop_time_train]
-
-    #test_data = data.loc[start_time_test : stop_time_test]
 
     x = data[['supply_temp', 'air_flow','outdoor_temp','occupancy']]
     y = data[['zone_temp']]
     x_train, x_test, y_train, y_test = train_test_split(x, y, test_size = 0.20, shuffle = False)
-    #x_test = train_data[['supply_temp', 'air_flow','outdoor_temp', 'occupancy']]
-    #y_test = test_data[['zone_temp']]
 
     regressor = SVR()
     model = regressor.fit(x_train, y_train)
@@ -89,14 +80,32 @@ def model(data):
     mse = mean_squared_error(y_test, y_pred)
     rmse = np.sqrt(mse)
     print(rmse)
-    print('y_test: ',y_test.zone_temp.values)
-    print('y_pred: ',y_pred)
     return rmse, y_pred
 
 def compute_jensen_shannon_divergence(vec1, vec2):
-
-    p = np.histogram(vec1)[0] / len(vec1)    
-    q = np.histogram(vec2)[0] / len(vec2)
+    print(vec1)
+    print(vec2)
+    vec1 = np.round(vec1, 2)
+    vec2 = np.round(vec2, 2)
+    min_vec1 = min(vec1)
+    min_vec2 = min(vec2)
+    max_vec1 = max(vec1)
+    max_vec2 = max(vec2)
+    mini = min_vec1
+    maxi = max_vec1
+    if min_vec1 > min_vec2:
+        mini = min_vec2
+    if max_vec1 < max_vec2:
+        maxi = max_vec2
+    b = []
+    i = mini
+    while i <= maxi+0.1:
+        b.append(i)
+        i = i + 0.1
+    p = np.histogram(vec1, bins = b)[0] / len(vec1)
+    print(np.histogram(vec1, bins = b)[0])    
+    q = np.histogram(vec2, bins = b)[0] / len(vec2)
+    print(np.histogram(vec2, bins = b)[0])
     print(p)
     print(q)
     score = distance.jensenshannon(p, q) ** 2
