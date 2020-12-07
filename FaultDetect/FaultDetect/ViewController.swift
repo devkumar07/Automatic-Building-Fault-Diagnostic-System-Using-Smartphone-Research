@@ -83,7 +83,7 @@ class ViewController: UIViewController, UITextFieldDelegate{
     @IBAction func predictButton(_ sender: Any) {
        areaField.endEditing(true)
        let parameters = ["area": areaField.text,"file_name": filenameField.text]
-       guard let url = URL(string: "http://127.0.0.1:5000/predict") else { return }
+       guard let url = URL(string: "http://192.168.1.10:5000/predict") else { return }
        var request = URLRequest(url: url)
        request.httpMethod = "POST"
        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -114,11 +114,13 @@ class ViewController: UIViewController, UITextFieldDelegate{
     
     @IBAction func recordTempButton(_ sender: Any) {
         areaField.endEditing(true)
+        timeStepsField.endEditing(true)
+        timeStepsFieldSeconds.endEditing(true)
         let textfieldInt: Int? = Int(timeStepsField.text!)
         let textfield2Int: Int? = Int(timeStepsFieldSeconds.text!)
         let time = textfieldInt!*3600 + textfield2Int!*60
         let parameters = ["steps": String(time)]
-        guard let url = URL(string: "http://127.0.0.1:5000/getOutsideTemp") else { return }
+        guard let url = URL(string: "http://192.168.1.10:5000/getOutsideTemp") else { return }
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")

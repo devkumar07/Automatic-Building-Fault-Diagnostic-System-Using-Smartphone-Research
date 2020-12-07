@@ -78,5 +78,5 @@ def predict():
          #return json.dumps({"error": 200, "msg": 'Divergence: '+str(score)})
    return json.dumps({"error":"COULD NOT RECIEVE POST REQUEST"})
 if __name__ == '__main__':
-    app.run()
+    app.run(host='0.0.0.0', port = 5000, threaded=True)
     
