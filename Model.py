@@ -56,7 +56,7 @@ def apiWeatherCall(time_steps):
     df['time'] = pd.to_datetime(df['time'])
     df.set_index('time', inplace=True)
     df.to_csv ('export_temp.csv', index = True, header=True) 
-    return pd.read_csv('data/export_temp_final.csv', parse_dates=['time'], index_col=['time'])
+    return df#pd.read_csv('data/export_temp1.csv', parse_dates=['time'], index_col=['time'])
 
 def preprocess_sensor_data(data,area,outside_temp, start_time, stop_time):
     processed = []
@@ -102,6 +102,7 @@ def compute_jensen_shannon_divergence(vec1, vec2):
     while i <= maxi+0.1:
         b.append(i)
         i = i + 0.1
+    print('Bins: ',b)
     p = np.histogram(vec1, bins = b)[0] / len(vec1)
     print(np.histogram(vec1, bins = b)[0])    
     q = np.histogram(vec2, bins = b)[0] / len(vec2)

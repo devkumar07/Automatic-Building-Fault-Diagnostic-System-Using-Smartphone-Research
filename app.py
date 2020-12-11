@@ -23,16 +23,18 @@ def predict():
    if request.method == 'POST':
       app_data = request.json
       #Download file from AWS S3
-      s3.download_file('faultdetect','test_data.csv', 'sensor_data.csv')
-      s3.download_file('faultdetect','zone_temp.csv', 'zone_temp.csv')
+      s3.download_file('faultdetect','sensor.csv', 'sensor_data.csv')
+      s3.download_file('faultdetect','zone.csv', 'zone_temp.csv')
 
       #Loading data from Testo sensor and Goove sensor
-      data = pd.read_csv('sensor_data.csv', parse_dates=['time'], index_col=['time'])
+      data = pd.read_csv('sensor_data.csv')
+      data['time'] = pd.to_datetime(data.time,dayfirst=True)
+      data.set_index('time', inplace=True)
       data1 = pd.read_csv('data/result.csv', parse_dates=['time'], index_col=['time'])
       zone_data = pd.read_csv('zone_temp.csv')
 
       #Fetching start and stop times
-      zone_data['time'] = pd.to_datetime(zone_data['time'])
+      zone_data['time'] = pd.to_datetime(zone_data['time'], dayfirst=False)
       start_time = zone_data['time'][0]
       end_time = zone_data['time'][len(zone_data['time'])-1]
 
@@ -43,12 +45,15 @@ def predict():
       print(start_time)
       """
 
-      print(start_time)
+      #print(start_time)
+      #print(end_time)
       print('-----------')
-      print(outside_temp)
+      outside_temp = pd.read_csv('data/export_temp1.csv')
+      outside_temp['time'] = pd.to_datetime(outside_temp.time,dayfirst=True)
+      outside_temp.set_index('time', inplace=True)
       #Filtering data and converting it into 1 min interval
       data = data.loc[str(start_time):str(end_time)]
-      data1 = data1.loc['2017-11-14 15:20:00':'2017-11-14 16:20:00']
+      data1 = data1.loc['2017-12-10 19:05:00':'2017-12-10 20:05:00']
       data = data.asfreq(freq='300S')
       zone_data.set_index('time', inplace=True)
       zone_data = zone_data.asfreq(freq='300S')
