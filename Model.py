@@ -56,7 +56,7 @@ def apiWeatherCall(time_steps):
     df['time'] = pd.to_datetime(df['time'])
     df.set_index('time', inplace=True)
     df.to_csv ('export_temp.csv', index = True, header=True) 
-    return df#pd.read_csv('data/export_temp1.csv', parse_dates=['time'], index_col=['time'])
+    return pd.read_csv('data/export_temp1.csv', parse_dates=['time'], index_col=['time'])
 
 def preprocess_sensor_data(data,area,outside_temp, start_time, stop_time):
     processed = []
