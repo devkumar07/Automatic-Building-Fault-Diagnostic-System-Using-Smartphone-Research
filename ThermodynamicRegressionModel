@@ -1,0 +1,434 @@
+{
+ "metadata": {
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.8.5"
+  },
+  "orig_nbformat": 2,
+  "kernelspec": {
+   "name": "python385jvsc74a57bd07802f7a98d74e2edaabdd10be07f73e329a81c06b73ee68dc813c43e16cc9075",
+   "display_name": "Python 3.8.5 64-bit ('base': conda)"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 2,
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": 88,
+   "metadata": {},
+   "outputs": [
+    {
+     "output_type": "execute_result",
+     "data": {
+      "text/plain": [
+       "        outdoor_temp      zone_temp      occupancy    supply_temp  \\\n",
+       "count  105121.000000  105121.000000  105121.000000  105121.000000   \n",
+       "mean       16.849776      23.328265       2.890041      22.230711   \n",
+       "std         8.424476       0.675541       4.195070       2.763142   \n",
+       "min        -2.700000      21.099926       0.000000      13.642080   \n",
+       "25%        10.500000      23.091054       0.000000      19.695878   \n",
+       "50%        15.833333      23.549340       0.000000      23.209409   \n",
+       "75%        22.666667      23.899066       8.000000      25.000001   \n",
+       "max        42.000000      24.157065      10.000000      25.446581   \n",
+       "\n",
+       "            air_flow  \n",
+       "count  105121.000000  \n",
+       "mean        0.642174  \n",
+       "std         0.174003  \n",
+       "min         0.073377  \n",
+       "25%         0.661022  \n",
+       "50%         0.733767  \n",
+       "75%         0.733767  \n",
+       "max         0.733767  "
+      ],
+      "text/html": "<div>\n<style scoped>\n    .dataframe tbody tr th:only-of-type {\n        vertical-align: middle;\n    }\n\n    .dataframe tbody tr th {\n        vertical-align: top;\n    }\n\n    .dataframe thead th {\n        text-align: right;\n    }\n</style>\n<table border=\"1\" class=\"dataframe\">\n  <thead>\n    <tr style=\"text-align: right;\">\n      <th></th>\n      <th>outdoor_temp</th>\n      <th>zone_temp</th>\n      <th>occupancy</th>\n      <th>supply_temp</th>\n      <th>air_flow</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <th>count</th>\n      <td>105121.000000</td>\n      <td>105121.000000</td>\n      <td>105121.000000</td>\n      <td>105121.000000</td>\n      <td>105121.000000</td>\n    </tr>\n    <tr>\n      <th>mean</th>\n      <td>16.849776</td>\n      <td>23.328265</td>\n      <td>2.890041</td>\n      <td>22.230711</td>\n      <td>0.642174</td>\n    </tr>\n    <tr>\n      <th>std</th>\n      <td>8.424476</td>\n      <td>0.675541</td>\n      <td>4.195070</td>\n      <td>2.763142</td>\n      <td>0.174003</td>\n    </tr>\n    <tr>\n      <th>min</th>\n      <td>-2.700000</td>\n      <td>21.099926</td>\n      <td>0.000000</td>\n      <td>13.642080</td>\n      <td>0.073377</td>\n    </tr>\n    <tr>\n      <th>25%</th>\n      <td>10.500000</td>\n      <td>23.091054</td>\n      <td>0.000000</td>\n      <td>19.695878</td>\n      <td>0.661022</td>\n    </tr>\n    <tr>\n      <th>50%</th>\n      <td>15.833333</td>\n      <td>23.549340</td>\n      <td>0.000000</td>\n      <td>23.209409</td>\n      <td>0.733767</td>\n    </tr>\n    <tr>\n      <th>75%</th>\n      <td>22.666667</td>\n      <td>23.899066</td>\n      <td>8.000000</td>\n      <td>25.000001</td>\n      <td>0.733767</td>\n    </tr>\n    <tr>\n      <th>max</th>\n      <td>42.000000</td>\n      <td>24.157065</td>\n      <td>10.000000</td>\n      <td>25.446581</td>\n      <td>0.733767</td>\n    </tr>\n  </tbody>\n</table>\n</div>"
+     },
+     "metadata": {},
+     "execution_count": 88
+    }
+   ],
+   "source": [
+    "import numpy as np\n",
+    "import pandas as pd\n",
+    "import matplotlib.pyplot as plt\n",
+    "from sklearn import preprocessing\n",
+    "from numpy import quantile, where, random\n",
+    "import matplotlib.pyplot as plt\n",
+    "import random\n",
+    "from sklearn.neighbors import LocalOutlierFactor\n",
+    "from sklearn.metrics import confusion_matrix, classification_report,accuracy_score\n",
+    "\n",
+    "data = pd.read_csv('data/result.csv')\n",
+    "train = data[84:108]\n",
+    "train = train.reset_index(drop=True)\n",
+    "test = data[108:120]\n",
+    "test = test.reset_index(drop=True)\n",
+    "data.describe()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 99,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from numpy import random\n",
+    "\n",
+    "#[1.189449\t0.223208\t5.089774\t1.797438\t0.180184]\n",
+    "##Faults:\n",
+    "# 1. Offset Fault: x' = a + x + err\n",
+    "# 2. Gain Fault: x' = Bx+ err\n",
+    "# 3. Stuck at Fault: x' = a\n",
+    "# 4. Out-of-bound: x'<theta1 and x'>theta2\n",
+    "\n",
+    "def simulateFault(sensedValues,params):\n",
+    "    end_fault_index = int(len(sensedValues) * 0.5)\n",
+    "    interval = end_fault_index/4\n",
+    "    BMS = []\n",
+    "    classification = []\n",
+    "    \n",
+    "    noise = random.rand(len(sensedValues)) * params['err']\n",
+    "    for i in range(0, len(sensedValues)):\n",
+    "        if i <= interval:\n",
+    "            a = params['constant']\n",
+    "            sign = random.randint(1,3)\n",
+    "            if sign == 1:\n",
+    "                BMS.append(noise[i] + a + sensedValues[i])\n",
+    "            else:\n",
+    "                BMS.append(-noise[i] + a + sensedValues[i])\n",
+    "            classification.append(1)\n",
+    "\n",
+    "        elif i > interval and i <= interval*2:\n",
+    "            B = params['coeff']\n",
+    "            sign = random.randint(1,3)\n",
+    "            if sign == 1:\n",
+    "                BMS.append(noise[i] + B * sensedValues[i])\n",
+    "            else:\n",
+    "                BMS.append(-noise[i] + B * sensedValues[i])\n",
+    "            classification.append(1)\n",
+    "\n",
+    "        elif i > interval*2 and i<= interval*3:\n",
+    "            a = params['stuck']\n",
+    "            BMS.append(a)\n",
+    "            classification.append(1)\n",
+    "            \n",
+    "        elif i > interval*3 and i<= interval*4:\n",
+    "            type_fault = random.randint(1,3)\n",
+    "            low_bound = params['bounds'][0]\n",
+    "            up_bound = params['bounds'][1]\n",
+    "            if type_fault == 1:\n",
+    "                BMS.append(low_bound-noise[i])\n",
+    "            else:\n",
+    "                BMS.append(up_bound + noise[i])\n",
+    "            classification.append(1)\n",
+    "        else:\n",
+    "            BMS.append(noise[i] + sensedValues[i])\n",
+    "            classification.append(0)\n",
+    "\n",
+    "    BMS = np.array(BMS)\n",
+    "    BMS = BMS.round(decimals = 3)\n",
+    "    sensedValues = sensedValues.round(decimals=3)\n",
+    "    return np.array(BMS), np.array(classification)\n",
+    "\n",
+    "def generateNoise(noise, values):\n",
+    "    noisy_data = []\n",
+    "    for i in range(0,len(values)):\n",
+    "        noisy_data.append(values[i]+random.uniform(-noise,noise))\n",
+    "    return noisy_data\n",
+    "\n",
+    "def modeled_equation(vals,coeffs):\n",
+    "    x1 = []\n",
+    "    x2 = []\n",
+    "    x3 = []\n",
+    "    x4 = []\n",
+    "    x = []\n",
+    "    y = []\n",
+    "    for i in range(1,len(vals)):\n",
+    "        x1.append(-(vals['zone_temp'][i] - vals['zone_temp'][i-1])/5 *coeffs[1])\n",
+    "        x2.append(vals['occupancy'][i]*coeffs[2])\n",
+    "        x3.append((vals['outdoor_temp'][i]-vals['zone_temp'][i])*coeffs[3])\n",
+    "        #x4.append(coeffs[0])\n",
+    "        y.append(-(vals['supply_temp'][i]-vals['zone_temp'][i]) * 1.005 * vals['air_flow'][i])\n",
+    "        x.append(x1[i-1]+x2[i-1]+x3[i-1])\n",
+    "    inputs = {'x1': x1,'x2':x2,'x3':x3, 'x':x}\n",
+    "    output = {'y':y}\n",
+    "    return inputs, output\n",
+    "\n",
+    "def define_vectors(vals):\n",
+    "    x1 = []\n",
+    "    x2 = []\n",
+    "    x3 = []\n",
+    "    y = []\n",
+    "    for i in range(1,len(vals)):\n",
+    "        x1.append(-(vals['zone_temp'][i] - vals['zone_temp'][i-1])/5)\n",
+    "        x2.append(vals['occupancy'][i]*coeffs[2])\n",
+    "        x3.append((vals['outdoor_temp'][i]-vals['zone_temp'][i]))\n",
+    "        y.append(-(vals['supply_temp'][i]-vals['zone_temp'][i]) * 1.005 * vals['air_flow'][i])\n",
+    "        x.append(x1[i-1]+x2[i-1]+x3[i-1])\n",
+    "    inputs = {'x1': x1,'x2':x2,'x3':x3}\n",
+    "    output = {'y':y}\n",
+    "    return inputs, output\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 90,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "inputs, output = define_vectors(train)\n",
+    "inputs_test, output_test = define_vectors(test)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 91,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from sklearn.preprocessing import StandardScaler\n",
+    "import statsmodels.api as sm\n",
+    "\n",
+    "scaler = StandardScaler()\n",
+    "\n",
+    "inputs = pd.DataFrame(data = inputs)\n",
+    "inputs = sm.add_constant(inputs, has_constant = 'add') #We add constant because statsmodel library requires us. Otherwise, it would take the form: y = mx.\n",
+    "output = pd.DataFrame(data = output)\n",
+    "\n",
+    "inputs_test = pd.DataFrame(data = inputs_test)\n",
+    "inputs_test = sm.add_constant(inputs_test,has_constant = 'add')\n",
+    "output_test = pd.DataFrame(data = output_test)\n",
+    "\n",
+    "inputs_scaled = scaler.fit_transform(inputs)\n",
+    "\n",
+    "inputs_scaled_test = scaler.transform(inputs_test)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 92,
+   "metadata": {},
+   "outputs": [
+    {
+     "output_type": "stream",
+     "name": "stdout",
+     "text": [
+      "const      0.000000\n",
+      "x1        26.519241\n",
+      "x2       463.234990\n",
+      "x3        42.708737\n",
+      "dtype: float64\n",
+      "/Users/devanshukumar/opt/anaconda3/lib/python3.8/site-packages/statsmodels/regression/linear_model.py:1860: RuntimeWarning: divide by zero encountered in double_scalars\n",
+      "  return np.sqrt(eigvals[0]/eigvals[-1])\n"
+     ]
+    }
+   ],
+   "source": [
+    "#x1: M_n\n",
+    "#x2: Q_n\n",
+    "#x3: R_n\n",
+    "model = sm.OLS(output, inputs_scaled)\n",
+    "results = model.fit()\n",
+    "results.summary()\n",
+    "print(results.params)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 93,
+   "metadata": {},
+   "outputs": [
+    {
+     "output_type": "stream",
+     "name": "stdout",
+     "text": [
+      "46270.094938592134\n[462.84932281 595.3307873  667.73196533 663.06576063 660.62645436\n 670.32525289 684.76267002 698.90748435 712.00590362 724.80087683\n 735.85787559]\n             y\n0   -41.765021\n1   399.089389\n2   441.586480\n3   420.521678\n4   475.626363\n5   518.572419\n6   554.506661\n7   586.673086\n8   616.856686\n9   645.670785\n10  674.839681\n    const        x1  x2         x3\n0     1.0 -0.048510  10 -20.169489\n1     1.0 -0.006540  10 -19.877188\n2     1.0  0.012850  10 -19.487936\n3     1.0  0.005747  10 -19.134200\n4     1.0 -0.000121  10 -18.809804\n5     1.0 -0.001615  10 -18.492878\n6     1.0 -0.001458  10 -18.175167\n7     1.0 -0.001408  10 -17.857205\n8     1.0 -0.001702  10 -17.540713\n9     1.0 -0.002074  10 -17.226081\n10    1.0 -0.002985  10 -16.916006\n"
+     ]
+    },
+    {
+     "output_type": "execute_result",
+     "data": {
+      "text/plain": [
+       "-0.173"
+      ]
+     },
+     "metadata": {},
+     "execution_count": 93
+    }
+   ],
+   "source": [
+    "from sklearn.metrics import mean_squared_error as mse\n",
+    "pred = results.predict(inputs_scaled_test)\n",
+    "err = mse(output_test,pred)\n",
+    "print(err)\n",
+    "print(pred)\n",
+    "print(output_test)\n",
+    "print(inputs_test)\n",
+    "-0.173"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 94,
+   "metadata": {},
+   "outputs": [
+    {
+     "output_type": "stream",
+     "name": "stdout",
+     "text": [
+      "[674.00190338]\n1.6775459122167276\n"
+     ]
+    }
+   ],
+   "source": [
+    "X1_test = -(data['zone_temp'][422] - data['zone_temp'][422-1])/5\n",
+    "X2_test = data['occupancy'][422]\n",
+    "X3_test = (data['outdoor_temp'][422]-data['zone_temp'][422])\n",
+    "Y_test = -(data['supply_temp'][422]-data['zone_temp'][422]) * 1.005 * data['air_flow'][422]\n",
+    "inp = [[X1_test,X2_test,X3_test]]\n",
+    "out = [[Y_test]]\n",
+    "inp = sm.add_constant(inp,has_constant='add')\n",
+    "inp = scaler.transform(inp)\n",
+    "# out = scaler.fit_transform(out)\n",
+    "pred1 = results.predict(inp)\n",
+    "# print(scaler.inverse_transform(pred1))\n",
+    "# print(scaler.inverse_transform(out))\n",
+    "print(pred1)\n",
+    "print(Y_test)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 95,
+   "metadata": {},
+   "outputs": [
+    {
+     "output_type": "stream",
+     "name": "stdout",
+     "text": [
+      "            time  outdoor_temp  zone_temp  occupancy  supply_temp  air_flow\n0   1/1/17 10:00      5.600000  22.664623         10    20.835482  0.731824\n1   1/1/17 10:05      5.733333  22.527447         10    20.763949  0.731824\n2   1/1/17 10:10      5.866667  21.755876         10    20.724178  0.731824\n3   1/1/17 10:15      6.000000  21.892620         10    20.675416  0.731824\n4   1/1/17 10:20      6.133333  22.045042         10    20.634566  0.731824\n5   1/1/17 10:25      6.266667  22.702320         10    20.597272  0.731824\n6   1/1/17 10:30      6.400000  22.647826         10    20.562500  0.731824\n7   1/1/17 10:35      6.533333  22.393813         10    20.505861  0.731824\n8   1/1/17 10:40      6.666667  22.322001         10    20.521327  0.723061\n9   1/1/17 10:45      6.800000  22.331225         10    20.451815  0.695495\n10  1/1/17 10:50      6.933333  22.469060         10    20.450321  0.684735\n11  1/1/17 10:55      7.066667  22.197842         10    20.409025  0.663975\n12  1/1/17 11:00      7.200000  22.820062         10    20.394786  0.649065\n13  1/1/17 11:05      7.383333  21.981589          8    20.704963  0.644315\n14  1/1/17 11:10      7.566667  22.344403          8    20.691806  0.628250\n15  1/1/17 11:15      7.750000  22.998873          8    20.676125  0.611641\n16  1/1/17 11:20      7.933333  22.280414          8    20.662817  0.594026\n17  1/1/17 11:25      8.116667  23.153844          8    20.645366  0.576358\n18  1/1/17 11:30      8.300000  22.781281          8    20.628632  0.559770\n19  1/1/17 11:35      8.483333  22.391093          8    20.614297  0.543486\n            time  outdoor_temp  zone_temp  occupancy  supply_temp  air_flow\n0   1/1/17 10:00      5.600000     26.224         10    20.835482  0.731824\n1   1/1/17 10:05      5.733333     26.917         10    20.763949  0.731824\n2   1/1/17 10:10      5.866667     26.773         10    20.724178  0.731824\n3   1/1/17 10:15      6.000000     30.837         10    20.675416  0.731824\n4   1/1/17 10:20      6.133333     31.637         10    20.634566  0.731824\n5   1/1/17 10:25      6.266667     31.592         10    20.597272  0.731824\n6   1/1/17 10:30      6.400000     23.000         10    20.562500  0.731824\n7   1/1/17 10:35      6.533333     23.000         10    20.505861  0.731824\n8   1/1/17 10:40      6.666667     15.958         10    20.521327  0.723061\n9   1/1/17 10:45      6.800000     15.573         10    20.451815  0.695495\n10  1/1/17 10:50      6.933333     40.398         10    20.450321  0.684735\n11  1/1/17 10:55      7.066667     22.644         10    20.409025  0.663975\n12  1/1/17 11:00      7.200000     22.884         10    20.394786  0.649065\n13  1/1/17 11:05      7.383333     22.873          8    20.704963  0.644315\n14  1/1/17 11:10      7.566667     22.762          8    20.691806  0.628250\n15  1/1/17 11:15      7.750000     22.636          8    20.676125  0.611641\n16  1/1/17 11:20      7.933333     22.654          8    20.662817  0.594026\n17  1/1/17 11:25      8.116667     22.889          8    20.645366  0.576358\n18  1/1/17 11:30      8.300000     22.781          8    20.628632  0.559770\n19  1/1/17 11:35      8.483333     22.805          8    20.614297  0.543486\n"
+     ]
+    }
+   ],
+   "source": [
+    "ground_truth = data[120:140]\n",
+    "ground_truth = ground_truth.reset_index(drop=True)\n",
+    "ground_truth['zone_temp'] = generateNoise(0.5, ground_truth['zone_temp'])\n",
+    "\n",
+    "fault_data = data[120:140]\n",
+    "fault_data = fault_data.reset_index(drop=True)\n",
+    "stuck_val = random.randint(16,32)\n",
+    "fault_data['zone_temp'],classification = simulateFault(fault_data['zone_temp'],{'constant': 4.5, 'coeff': 1.4, 'stuck': stuck_val, 'bounds': [16,40],'err':0.5})\n",
+    "# fault_data['supply_temp'],classification = simulateFault(fault_data['supply_temp'],{'constant': 4.5, 'coeff': 1.4, 'stuck': stuck_val, 'bounds': [16,40],'err':0.5})\n",
+    "# stuck_val = random.uniform(0,1)\n",
+    "# fault_data['air_flow'],classification = simulateFault(fault_data['air_flow'], {'constant': 0.09, 'coeff': 1.005, 'stuck': stuck_val, 'bounds': [0.05,0.8],'err':0.05})\n",
+    "print(ground_truth)\n",
+    "print(fault_data)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 96,
+   "metadata": {},
+   "outputs": [
+    {
+     "output_type": "stream",
+     "name": "stdout",
+     "text": [
+      "[3913.7974732684856, 3952.9830505971954, 3952.700954654258, 3951.743540677933, 3928.855688212836, 3936.8920670541465, 3953.5802676108765, 3962.4218443653403, 3967.717224607987, 3967.449420037487, 3984.92285620008, 3963.6547456885946, 3081.580186863255, 3073.6980244304204, 3053.1920255652963, 3092.168511566585, 3062.208056159142, 3086.1916675535576, 3110.9265733029943]\n{'y': [-0.7275604216986326, -4.092299028460475, 0.7252686748472364, 0.8084246823711474, 3.4861017387674607, -0.289028579394362, -1.347241815067502, -0.3808834633510839, 0.04892578110474064, 0.7310542101579957, -1.438500939887739, 3.3001620508405307, -4.447132481259642, 1.92430997761328, 3.4712084291386356, -3.810595304265991, 4.632538496055158, -1.9760155595135032, -2.0694995088585637]}\n"
+     ]
+    }
+   ],
+   "source": [
+    "ground_truth_input, ground_truth_output = modeled_equation(ground_truth, results.params)\n",
+    "fault_input, fault_output = modeled_equation(fault_data, results.params)\n",
+    "\n",
+    "print(ground_truth_input['x'])\n",
+    "print(ground_truth_output)\n",
+    "\n",
+    "ground_truth_input = pd.DataFrame(data = ground_truth_input)\n",
+    "ground_truth_input = sm.add_constant(ground_truth_input)\n",
+    "ground_truth_output = pd.DataFrame(data = ground_truth_output)\n",
+    "\n",
+    "fault_input = pd.DataFrame(data = fault_input)\n",
+    "fault_input = sm.add_constant(fault_input)\n",
+    "fault_output = pd.DataFrame(data = fault_output)\n",
+    "\n",
+    "ground_truth_input = scaler.fit_transform(ground_truth_input)\n",
+    "fault_input = scaler.fit_transform(fault_input)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 97,
+   "metadata": {},
+   "outputs": [
+    {
+     "output_type": "execute_result",
+     "data": {
+      "text/plain": [
+       "       outdoor_temp  zone_temp  occupancy  supply_temp   air_flow\n",
+       "count     10.000000  10.000000  10.000000    10.000000  10.000000\n",
+       "mean      22.125000  21.299617   1.000000    19.005399   0.413214\n",
+       "std        0.756913   0.095192   3.162278     0.406876   0.111948\n",
+       "min       21.000000  21.193535   0.000000    17.887593   0.377812\n",
+       "25%       21.562500  21.217315   0.000000    19.029262   0.377812\n",
+       "50%       22.125000  21.285775   0.000000    19.070021   0.377812\n",
+       "75%       22.687500  21.355565   0.000000    19.188773   0.377812\n",
+       "max       23.250000  21.468564  10.000000    19.330530   0.731824"
+      ],
+      "text/html": "<div>\n<style scoped>\n    .dataframe tbody tr th:only-of-type {\n        vertical-align: middle;\n    }\n\n    .dataframe tbody tr th {\n        vertical-align: top;\n    }\n\n    .dataframe thead th {\n        text-align: right;\n    }\n</style>\n<table border=\"1\" class=\"dataframe\">\n  <thead>\n    <tr style=\"text-align: right;\">\n      <th></th>\n      <th>outdoor_temp</th>\n      <th>zone_temp</th>\n      <th>occupancy</th>\n      <th>supply_temp</th>\n      <th>air_flow</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <th>count</th>\n      <td>10.000000</td>\n      <td>10.000000</td>\n      <td>10.000000</td>\n      <td>10.000000</td>\n      <td>10.000000</td>\n    </tr>\n    <tr>\n      <th>mean</th>\n      <td>22.125000</td>\n      <td>21.299617</td>\n      <td>1.000000</td>\n      <td>19.005399</td>\n      <td>0.413214</td>\n    </tr>\n    <tr>\n      <th>std</th>\n      <td>0.756913</td>\n      <td>0.095192</td>\n      <td>3.162278</td>\n      <td>0.406876</td>\n      <td>0.111948</td>\n    </tr>\n    <tr>\n      <th>min</th>\n      <td>21.000000</td>\n      <td>21.193535</td>\n      <td>0.000000</td>\n      <td>17.887593</td>\n      <td>0.377812</td>\n    </tr>\n    <tr>\n      <th>25%</th>\n      <td>21.562500</td>\n      <td>21.217315</td>\n      <td>0.000000</td>\n      <td>19.029262</td>\n      <td>0.377812</td>\n    </tr>\n    <tr>\n      <th>50%</th>\n      <td>22.125000</td>\n      <td>21.285775</td>\n      <td>0.000000</td>\n      <td>19.070021</td>\n      <td>0.377812</td>\n    </tr>\n    <tr>\n      <th>75%</th>\n      <td>22.687500</td>\n      <td>21.355565</td>\n      <td>0.000000</td>\n      <td>19.188773</td>\n      <td>0.377812</td>\n    </tr>\n    <tr>\n      <th>max</th>\n      <td>23.250000</td>\n      <td>21.468564</td>\n      <td>10.000000</td>\n      <td>19.330530</td>\n      <td>0.731824</td>\n    </tr>\n  </tbody>\n</table>\n</div>"
+     },
+     "metadata": {},
+     "execution_count": 97
+    }
+   ],
+   "source": [
+    "#[1.189449\t0.223208\t5.089774\t1.797438\t0.180184]\n",
+    "#TODO: implement feedback loop script for data collection\n",
+    "i = 53658\n",
+    "data2 = data[53656:53658]\n",
+    "data2 = data2.reset_index(drop=True)\n",
+    "stats = data2.describe()\n",
+    "while stats['outdoor_temp']['std'] == 0 or stats['zone_temp']['std'] == 0 or stats['occupancy']['std'] == 0  or stats['supply_temp']['std'] == 0 or stats['air_flow']['std'] == 0:\n",
+    "    if i > len(data):\n",
+    "        break\n",
+    "    i = i + 1\n",
+    "    data2 = data[53656:i]\n",
+    "    data2 = data2.reset_index(drop=True)\n",
+    "    stats = data2.describe()\n",
+    "data2.describe()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  }
+ ]
+}
